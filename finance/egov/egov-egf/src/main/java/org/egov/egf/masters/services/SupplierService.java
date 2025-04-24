@@ -51,6 +51,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -200,5 +201,12 @@ public class SupplierService implements EntityTypeService {
 	public List<? extends org.egov.commons.utils.EntityType> getEntitiesById(List<Long> idsList)
 			throws ValidationException {
 		return Collections.emptyList();
+	}
+	
+	@Transactional
+	public String supplierCode() {
+	    Long nextSeq = Optional.ofNullable(supplierRepository.getNextSupplierSequence()).orElse(0L) + 1;
+	    String supCode = "Sup/001/" + String.format("%04d", nextSeq);
+	    return supCode;
 	}
 }

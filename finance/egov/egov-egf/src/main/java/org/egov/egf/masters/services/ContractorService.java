@@ -51,6 +51,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -198,6 +199,13 @@ public class ContractorService implements EntityTypeService {
 	public List<? extends org.egov.commons.utils.EntityType> getEntitiesById(List<Long> idsList)
 			throws ValidationException {
 		return Collections.emptyList();
+	}
+	
+	@Transactional
+	public String contractorCode() {
+	    Long nextSeq = Optional.ofNullable(contractorRepository.getNextContractorSequence()).orElse(0L) + 1;
+	    String supCode = "Con/001/" + String.format("%04d", nextSeq);
+	    return supCode;
 	}
 
 }

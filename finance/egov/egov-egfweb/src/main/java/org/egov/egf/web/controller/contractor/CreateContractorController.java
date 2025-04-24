@@ -116,6 +116,7 @@ public class CreateContractorController {
 		model.addAttribute("banks", createBankService.getByIsActiveTrueOrderByName());
 		model.addAttribute("statuses",
 				egwStatusHibDAO.getStatusByModule(FinancialConstants.STATUS_MODULE_NAME_CONTRACTOR));
+		model.addAttribute("ContractorCodeAutoGeneration",contractorService.contractorCode());
 	}
 
 	@PostMapping(value = "/newform")

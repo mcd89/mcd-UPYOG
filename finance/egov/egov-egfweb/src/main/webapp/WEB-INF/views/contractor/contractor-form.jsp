@@ -52,10 +52,14 @@
 			code="contractor.code" text='Code' /><span class="mandatory"></span>
 	</label>
 	<div class="col-sm-3 add-margin">
-		<form:input path="code" maxlength="50"
-			cssClass="form-control patternvalidation"
-			data-pattern="alphanumericwithspace" required="required" />
-		<form:errors path="code" cssClass="add-margin error-msg" />
+		 <c:if test="${!ContractorCodeAutoGeneration}">
+			<form:input path="code" maxlength="50" cssClass="form-control patternvalidation" data-pattern="alphanumericwithspace" required="required" value="${ContractorCodeAutoGeneration}"  />
+			<form:errors path="code" cssClass="add-margin error-msg" />
+		 </c:if>
+		 <c:if test="${ContractorCodeAutoGeneration}">
+			<form:input path="code" maxlength="50" cssClass="form-control patternvalidation" data-pattern="alphanumericwithspace" required="required" />
+			<form:errors path="code" cssClass="add-margin error-msg" />
+		 </c:if>
 	</div>
 	<label class="col-sm-2 control-label text-right" for="name"> <spring:message
 			code="contractor.name" text='Name' /><span class="mandatory"></span>

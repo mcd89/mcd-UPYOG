@@ -109,6 +109,7 @@ public class CreateSupplierController {
 		model.addAttribute("banks", createBankService.getByIsActiveTrueOrderByName());
 		model.addAttribute("statuses",
 				egwStatusHibDAO.getStatusByModule(FinancialConstants.STATUS_MODULE_NAME_SUPPLIER));
+		model.addAttribute("SupplierCodeAutoGeneration",supplierService.supplierCode());
 	}
 
 	@PostMapping(value = "/newform")

@@ -51,8 +51,14 @@
 	<label class="col-sm-2 control-label text-right" for="code"> <spring:message code="supplier.code" /><span class="mandatory"></span> 
 	</label>
 	<div class="col-sm-3 add-margin">
-		<form:input path="code" maxlength="50" cssClass="form-control patternvalidation" data-pattern="alphanumericwithspace" required="required"/>
-		<form:errors path="code" cssClass="add-margin error-msg" />
+		<c:if test="${!SupplierCodeAutoGeneration}">
+		    <form:input path="code" maxlength="50" cssClass="form-control patternvalidation" data-pattern="alphanumericwithspace" required="required" value="${SupplierCodeAutoGeneration}"/>
+		    <form:errors path="code" cssClass="add-margin error-msg" />
+	    </c:if>
+	    <c:if test="${SupplierCodeAutoGeneration}">
+		    <form:input path="code" maxlength="50" cssClass="form-control patternvalidation" data-pattern="alphanumericwithspace" required="required" />
+		    <form:errors path="code" cssClass="add-margin error-msg" />
+	    </c:if>
 	</div>
 	<label class="col-sm-2 control-label text-right" for="name"> <spring:message code="supplier.name" /><span class="mandatory"></span>
 	</label>
