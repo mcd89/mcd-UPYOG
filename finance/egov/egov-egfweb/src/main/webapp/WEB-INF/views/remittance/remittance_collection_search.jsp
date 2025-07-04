@@ -85,8 +85,8 @@ var fromDateToDateAlertMsg = '<spring:message code="msg.fromDate.must.be.lower.t
 		<div class="row">
 			<div class="col-md-12">
 				<div class="panel panel-primary" data-collapsed="0">
-					<div class="panel-heading">
-						<div class="subheadnew"  style="text-align: center"><spring:message code="lbl.remittance.collection.report" text="Remittance Collection Report" /></div>
+					<div class="panel-heading"> 
+						<div class="subheadnew" style="padding: 1px 15px;"><spring:message code="lbl.remittance.collection.report" text="Remittance Collection Report" /></div>
 					</div>
 					<div class="panel-body">
 					<div class="form-group">

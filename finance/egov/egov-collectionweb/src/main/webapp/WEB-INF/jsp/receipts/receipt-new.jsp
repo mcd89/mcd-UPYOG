@@ -1168,15 +1168,15 @@ function showHideMandataryMark(obj){
 	  	</td></tr>
 	  	<tr><td>
     	
-    		<div class="billhead2">
+    		<div class="billhead2" style="font-weight:bold; font-size: 16px;">
 	    		<s:if test="%{!isBillSourcemisc()}">
 	    			<s:text name="billreceipt.payment.totalamt.tobereceived"/>
 	   				<span class="bold">
 	    			
-	   				<input style="border:0px;background-color:#FFFFCC;font-weight:bold;" type="text" name="totalamounttobepaid" id="totalamounttobepaid" readonly="readonly" value='<s:property value="%{totalAmntToBeCollected}" />' >
+	   				<input style="border:0px;background-color:#FFFFCC;font-weight:bold; font-size: 16px;" type="text" name="totalamounttobepaid" id="totalamounttobepaid" readonly="readonly" value='<s:property value="%{totalAmntToBeCollected}" />' >
 	   				</span>
 	   			</s:if>
-	   			<s:text name="billreceipt.payment.totalamt.received"/><span><input style="border:0px;background-color:#FFFFCC;font-weight:bold;" type="text" name="totalamountdisplay" id="totalamountdisplay" readonly="readonly" tabindex='-1'></span>
+	   			<s:text name="billreceipt.payment.totalamt.received"/><span><input style="border:0px;background-color:#FFFFCC;font-weight:bold; font-size: 16px;" type="text" name="totalamountdisplay" id="totalamountdisplay" readonly="readonly" tabindex='-1'></span>
    			</div>
    			<s:hidden label="totalAmntToBeCollected" name="totalAmntToBeCollected" value="%{totalAmntToBeCollected}"/>
     	</td></tr>
@@ -1197,21 +1197,21 @@ function showHideMandataryMark(obj){
 		   <td class="bluebox"><s:textfield label="paidBy" id="paidBy" maxlength="150" name="paidBy" value="%{payeeName}" /></td>
 	    </tr>
 	    </s:if>
-		<table id="manualreceipt" >    
+		<table id="manualreceipt" width="100%">    
 		
 			<s:if test="%{manualReceiptNumberAndDateReq}">
 				<tr>
 					<td class="bluebox" width="3%" ></td>
-					<td class="bluebox"><s:text name="billreceipt.manualreceiptinfo"/><span id="asteriskId"  class="mandatory1">*</span></td>
-					 <td class="bluebox"><s:checkbox label="manualreceiptinfo" id="manualreceiptinfo" name="receiptInfo" onChange="showHideMandataryMark(this)"/></td>
+					<td class="bluebox" width="22%"><s:text name="billreceipt.manualreceiptinfo"/><span id="asteriskId"  class="mandatory1">*</span></td>
+					 <td class="bluebox" colspan="3"><s:checkbox label="manualreceiptinfo" id="manualreceiptinfo" name="receiptInfo" onChange="showHideMandataryMark(this)"/></td>
 				</tr>
 			 </s:if>
 			 
 			 <s:if test="%{manualReceiptNumberAndDateReq}">
 				<tr>
-				    <td class="bluebox" width="3%" ></td>
+				    <td class="bluebox" width="3%"></td>
 					<td class="bluebox"><s:text name="billreceipt.manualreceipt.receiptnumber"/></td>
-					<td class="bluebox"><s:textfield label="manualReceiptNumber" id="manualReceiptNumber" maxlength="50" name="manualReceiptNumber" size="18" /></td>
+					<td class="bluebox" width="33%"><s:textfield label="manualReceiptNumber" id="manualReceiptNumber" maxlength="50" name="manualReceiptNumber" size="18" /></td>
 					<td class="bluebox"><s:text name="billreceipt.manualreceipt.receiptdate"/></td>
 					<td class="bluebox"><s:textfield id="manualReceiptDate" name="manualReceiptDate" cssClass="datepicker"  styleId="manualReceiptDate" onblur="validateManualReceiptDate(this);" data-inputmask="'mask': 'd/m/y'"/><div>(DD/MM/YYYY)</div></td>
 				</tr>
@@ -1222,19 +1222,19 @@ function showHideMandataryMark(obj){
 		</table>
 			
 
-			<table border="0" width="100%" border="0" cellpadding="0" cellspacing="0" align="center" style="padding:0px;margin:0px;">
+			<!--<table border="0" width="100%" border="0" cellpadding="0" cellspacing="0" align="center" style="padding:0px;margin:0px;">
 				<tr>
 			        	<td class="bluebox2new" width="21%"></td>
 			            	<td class="bluebox2"></td>
 					<td class="bluebox2">&nbsp;</td>
 					<td class="bluebox2">&nbsp;</td>	
 			     	</tr>				
-			</table>
+			</table>-->
 			 
 			 <div id="loadingMask" style="display:none;overflow:hidden;text-align: center"><img src="/services/collection/resources/images/bar_loader.gif"/> <span style="color: red">Please wait....</span></div>
-			<div align="left" class="mandatorycoll"><s:text name="common.mandatoryfields"/></div>
+			<div align="left" class="mandatorycoll"> &nbsp;&nbsp;&nbsp; <s:text name="common.mandatoryfields"/></div>
 			<div class="buttonbottom" align="center">
-			      <label><input align="center" type="submit" class="buttonsubmit" id="button2" value="<s:text name='lbl.pay'/>" onclick="return validate();"/></label>
+			      <input align="center" type="submit" class="buttonsubmit" id="button2" value="<s:text name='lbl.pay'/>" onclick="return validate();"/>
 			      &nbsp;
 			      <input name="button" type="button" class="button" id="button" value="<s:text name='lbl.reset'/>" onclick="checkreset();"/>
 			      &nbsp;

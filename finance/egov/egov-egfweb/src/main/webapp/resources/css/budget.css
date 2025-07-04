@@ -206,10 +206,8 @@ th.bluebgheadtd {
 	color: #FFFFFF;
 	padding-right: 5px;
 	padding-left: 5px;
-	text-align: center;
-	border-right-color: #CCCCCC;
-    border-bottom-color: #CCCCCC;
-    background-color: #f2851f;
+	text-align: left;
+    background-color: #34495E;
 	}
 td.bluebgheadtd {
 	height: 32px;
@@ -224,10 +222,8 @@ td.bluebgheadtd {
 	padding-right: 5px;
 	padding-left: 5px;
 	background-color: #999999;
-	text-align: center;
-	border-right-color: #CCCCCC;
-    border-bottom-color: #CCCCCC;
-    background-color: #f2851f;
+	text-align: left;
+    background-color: #34495E;
 	}
 	
 td.totalbg {
@@ -489,7 +485,7 @@ td.totalbg {
 	}
 div.subheadsmallnew {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 11px;
+	font-size: 17px;
 	font-weight: bold;
 	color: #006699;
 	background-color: #E8E8E8;

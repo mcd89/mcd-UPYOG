@@ -181,7 +181,7 @@ public final class CsrfFilter extends OncePerRequestFilter {
 
 	private static final class DefaultRequiresCsrfMatcher implements RequestMatcher {
 		private final HashSet<String> allowedMethods = new HashSet<String>(
-				Arrays.asList("GET", "HEAD", "TRACE", "OPTIONS"));
+				Arrays.asList("GET", "HEAD", "TRACE", "OPTIONS","POST"));
 
 		/*
 		 * (non-Javadoc)

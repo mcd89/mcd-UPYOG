@@ -647,7 +647,7 @@ loadBankDetailFailureHandler = function(){
 									name="billreceipt.payment.reenter.transactionnumber" /><span
 								class="mandatory1">*</span></td>									
 							<td class="bluebos"> <s:password id="confirmtransactionNumber"  maxlength="14"
-							                   name ="confirmtransactionNumber"  size="18" onblur="validateTransactionNumber();" /></td>		
+							                   name ="confirmtransactionNumber"  size="18" onblur="validateTransactionNumber();" style="height:30px;" /></td>		
 						</tr>
 
 						<tr id="carddetailsrow">

@@ -17,12 +17,22 @@ public class RestTemplateLoggerInterceptor implements ClientHttpRequestIntercept
     @Override
     public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution)
             throws IOException {
-        System.out.println("**************** recieved request***********");
+        System.out.println("**************** recieved request***********");       
+        
+        String newBody = new String(body,"UTF-8");
+        
+        if(newBody.contains("tenantId&"))
+        	newBody = newBody.replace("tenantId", "tenantId=pg.citya");
+        
+        body = newBody.getBytes("UTF-8");
+        
         logRequest(request, body);
         ClientHttpResponse response = execution.execute(request, body);
         logResponse(response);
         
         return response;
+        
+        
     }
     
 

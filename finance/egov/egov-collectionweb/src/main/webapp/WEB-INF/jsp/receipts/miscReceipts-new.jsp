@@ -724,11 +724,11 @@ var totaldbamt=0,totalcramt=0;
         var cell1 = row.insertCell(0);
         var cell2 = row.insertCell(1);
         cell1.className='bluebox';
-        cell1.width="45%";
+        cell1.width="15%";
         cell2.className='bluebox';
-        cell2.width="50%";
+        cell2.width="84%";
         cell1.innerHTML = '<s:text name="miscreceipt.service" /><span class="mandatory"/>';
-        cell2.innerHTML = '<select name="serviceId" id="serviceId" onchange="loadFinDetails(this)"/>';
+        cell2.innerHTML = '<select name="serviceId" id="serviceId" onchange="loadFinDetails(this)" style="width:94%"/>';
 		document.getElementById('serviceId').options.length=0;
 		document.getElementById('serviceId').options[0]= new Option('--------Choose--------','0');
 	
@@ -749,14 +749,14 @@ var totaldbamt=0,totalcramt=0;
                 <s:textfield id="voucherDate" name="voucherDate" onfocus="javascript:vDateType='3';" onkeyup="DateFormat(this,this.value,event,false,'3')"  onblur="validateVoucherDate(this)" data-inputmask="'mask': 'd/m/y'"/>
                 <div class="highlight2" style="width:80px">DD/MM/YYYY</div>             
           </td>
-            <td width="21%" class="bluebox"><s:text name="challan.narration"/></td>
-		    <td width="24%" class="bluebox"><s:textarea name="referenceDesc" id="referenceDesc" value="%{referenceDesc}" cols="18" rows="1" maxlength="125" onkeyup="return ismaxlength(this)"/></td>
+            <td width="7%" class="bluebox"><s:text name="challan.narration"/></td>
+		    <td width="42%" class="bluebox"><s:textarea name="referenceDesc" id="referenceDesc" value="%{referenceDesc}" cols="76" rows="1" maxlength="125" onkeyup="return ismaxlength(this)"/></td>
           </tr>
-	       <tr> <td width="4%" class="bluebox2">&nbsp;</td>
-		   <td class="bluebox" width="21%"><s:text name="billreceipt.counter.paidby"/><span class="mandatory1">*</span></td>
+	       <tr> <td  class="bluebox2">&nbsp;</td>
+		   <td class="bluebox" ><s:text name="billreceipt.counter.paidby"/><span class="mandatory1">*</span></td>
 		   <td class="bluebox"><s:textfield label="paidBy" id="paidBy" maxlength="64" name="paidBy" value="%{payeeName}" /></td>
-		   <td width="21%" class="bluebox2"><s:text name="challan.payeeAddress"/></td>
-		   <td width="24%" class="bluebox2"><s:textarea name="payeeAddress" id="payeeAddress" value="%{payeeAddress}" cols="18" rows="1" maxlength="255" onkeyup="return ismaxlength(this)"/></td>
+		   <td class="bluebox2"><s:text name="challan.payeeAddress"/></td>
+		   <td  class="bluebox2"><s:textarea name="payeeAddress" id="payeeAddress" value="%{payeeAddress}" cols="76" rows="1" maxlength="255" onkeyup="return ismaxlength(this)"/></td>
 	    </tr>
 	  <tr> 
            <s:if test="%{shouldShowHeaderField('field')}">

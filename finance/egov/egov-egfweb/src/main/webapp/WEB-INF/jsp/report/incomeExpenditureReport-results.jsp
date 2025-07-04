@@ -59,9 +59,13 @@
 </style>
 
 <div id="budgetSearchGrid"
-	style="width: 1250px; overflow-x: auto; overflow-y: hidden;">
+	style="width: 100%;">
 	<br />
-	<div style="overflow-x: scroll; overflow-y: scroll;">
+	<div style="">
+	
+	
+	
+	
 		<table width="100%" cellpadding="0" cellspacing="0" border="0">
 			<tr>
 				<td>
@@ -88,10 +92,10 @@
 									</div>
 								</td>
 							</tr>
-							<tr>
+							<!--<tr>
 								<th class="bluebgheadtd"><s:text name="report.accountCode" /></th>
 								<th class="bluebgheadtd"><s:text
-										name="report.headOfAccount" /></th>
+										name="report.particulars" /></th>
 								<th class="bluebgheadtd"><s:text name="report.scheduleNo" /></th>
 								<%--<th class="bluebgheadtd"><s:text
 										name="report.revisedestimate" />
@@ -102,19 +106,19 @@
 									<th class="bluebgheadtd" width="30%" colspan="2"><s:property
 											value="name" />(Rs)</th>
 								</s:iterator>
-							</tr>
+							</tr>-->
 							<tr>
-								<th class="bluebgheadtd"><s:text name="" /></th>
-								<th class="bluebgheadtd"><s:text name="" /></th>
-								<th class="bluebgheadtd"><s:text name="" /></th>
+								<th class="bluebgheadtd"><s:text name="report.accountCode" /></th>
+								<th class="bluebgheadtd"><s:text name="report.particulars" /></th>
+								<th class="bluebgheadtd"><s:text name="report.scheduleNo" /></th>
 								<%--<th class="bluebgheadtd"><s:text name="" /></th> --%>
 								<s:if test="%{incomeExpenditureStatement.getFunds().size()==1}">
 									<s:iterator value="incomeExpenditureStatement.funds"
 										status="stat">
-										<th class="bluebgheadtd" width="15%" align="center"
-											colspan="1"><s:property value="currentYearToDate" />(Rs)</th>
-										<th class="bluebgheadtd" width="15%" align="center"
-											colspan="1"><s:property value="previousYearToDate" />(Rs)</th>
+										<th class="bluebgheadtd"  align="center"
+											colspan="1"> Current Year Amount (<s:property value="currentYearToDate" />(Rs)) </th>
+										<th class="bluebgheadtd"  align="center"
+											colspan="1"> Previous Year Amount (<s:property value="previousYearToDate" />(Rs)) </th>
 									</s:iterator>
 								</s:if>
 								<s:else>
@@ -129,6 +133,13 @@
 									</s:iterator>
 								</s:else>
 							</tr>
+							</tr>
+							<tr>
+							<td class="blueborderfortd">1</td>
+							<td class="blueborderfortd">2</td>
+							<td class="blueborderfortd">3</td>
+							<td class="blueborderfortd">4</td>
+							<td class="blueborderfortd">5</td>
 							</tr>
 							<s:iterator value="incomeExpenditureStatement.ieEntries"
 								status="stat">

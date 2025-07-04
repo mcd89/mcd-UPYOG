@@ -38,10 +38,14 @@ import com.mchange.rmi.NotAuthorizedException;
 public class ApplicationSecurityRepository implements SecurityContextRepository {
 
 	private static final String AUTH_TOKEN = "auth_token";
-	
+
 	private static final String SESSION_ID = "session_id";
 
 	private static final Logger LOGGER = Logger.getLogger(ApplicationSecurityRepository.class);
+
+	private static String LOGGED_IN_USER_AUTH_TOKEN = null;
+
+	private static String LOGGED_IN_USER_TENANT_ID = null;
 
 	@Autowired
 	public RedisTemplate<Object, Object> redisTemplate;
@@ -60,13 +64,23 @@ public class ApplicationSecurityRepository implements SecurityContextRepository 
 			HttpSession session = request.getSession();
 			LOGGER.info(" *** URI " + request.getRequestURL().toString());
 			curUser = (CurrentUser) this.microserviceUtils.readFromRedis(request.getSession().getId(), "current_user");
+			// System.out.println("----------------------------------- curUser outside :
+			// "+curUser+"-------------------------------");
 			if (curUser == null) {
 				LOGGER.info(" ***  Session is not available in redis.... , trying to login");
 				curUser = new CurrentUser(this.getUserDetails(request));
+				// System.out.println("----------------------------------- curUser inside :
+				// "+curUser+"-------------------------------");
+				// System.out.println("----------------------------------- session.getId()
+				// inside : "+session.getId()+"-------------------------------");
 				this.microserviceUtils.savetoRedis(session.getId(), "current_user", curUser);
 			}
 			String oldToken = (String) session.getAttribute(MS_USER_TOKEN);
+			// System.out.println("----------------------------------- oldToken :
+			// "+oldToken+"-------------------------------");
 			String newToken = (String) this.microserviceUtils.readFromRedis(session.getId(), AUTH_TOKEN);
+			// System.out.println("----------------------------------- newToken :
+			// "+newToken+"-------------------------------");
 			if (null != oldToken && null != newToken && !oldToken.equals(newToken)) {
 				session.setAttribute(MS_USER_TOKEN, newToken);
 			}
@@ -110,6 +124,41 @@ public class ApplicationSecurityRepository implements SecurityContextRepository 
 		userToken = request.getParameter(AUTH_TOKEN);
 		tenantid = request.getParameter("tenantId");
 		HttpSession session = request.getSession();
+
+		/*
+		 * if (request.getParameter(AUTH_TOKEN) != null)
+		 * session.setAttribute(AUTH_TOKEN, userToken); else userToken = (String)
+		 * session.getAttribute(AUTH_TOKEN);
+		 * 
+		 * if (request.getParameter("tenantId") != null)
+		 * session.setAttribute("tenantId", tenantid); else tenantid = (String)
+		 * session.getAttribute("tenantId");
+		 * 
+		 * System.out.println(
+		 * "**********************************************************************************************************"
+		 * );
+		 * System.out.println("*************************************** userToken : "+((
+		 * String)
+		 * session.getAttribute(AUTH_TOKEN))+"*****************************************"
+		 * );
+		 * System.out.println("*************************************** tenantId : "+((
+		 * String)
+		 * session.getAttribute("tenantId"))+"*****************************************"
+		 * ); System.out.println(
+		 * "**********************************************************************************************************"
+		 * );
+		 * 
+		 */
+
+		if (userToken != null && LOGGED_IN_USER_AUTH_TOKEN == null) {
+			LOGGED_IN_USER_AUTH_TOKEN = userToken;
+			LOGGED_IN_USER_TENANT_ID = tenantid;
+		} else if (userToken == null && LOGGED_IN_USER_AUTH_TOKEN != null) {
+			userToken = LOGGED_IN_USER_AUTH_TOKEN;
+			request.setAttribute(AUTH_TOKEN, userToken);
+			request.setAttribute("tenantId", LOGGED_IN_USER_TENANT_ID);
+		}
+
 		LOGGER.info(" *** authtoken " + userToken);
 
 		if (userToken == null) {
@@ -125,9 +174,9 @@ public class ApplicationSecurityRepository implements SecurityContextRepository 
 		session.setAttribute(MS_TENANTID_KEY, user.getTenantId());
 		session.setAttribute(USERID_KEY, user.getId());
 		UserSearchResponse response = this.microserviceUtils.getUserInfo(userToken, user.getTenantId(), user.getUuid());
-		LOGGER.info("Before remove session::"+userToken + "::" + session.getId());
+		LOGGER.info("Before remove session::" + userToken + "::" + session.getId());
 		this.microserviceUtils.removeSessionFromRedis(userToken, session.getId());
-		
+
 		this.microserviceUtils.savetoRedis(session.getId(), AUTH_TOKEN, userToken);
 		this.microserviceUtils.savetoRedis("session_token_fetch:" + userToken, SESSION_ID, session.getId());
 		this.microserviceUtils.savetoRedis(session.getId(), "_details", user);
@@ -135,16 +184,18 @@ public class ApplicationSecurityRepository implements SecurityContextRepository 
 
 		this.microserviceUtils.setExpire(session.getId());
 		this.microserviceUtils.setExpire(userToken);
-		
+
 		Object sessionIdFromRedis = redisTemplate.opsForHash().get("session_token_fetch:" + userToken, "session_id");
-        LOGGER.info("**Redis:: sessionID*****"+sessionIdFromRedis);
-        
-		/*
-		 * LOGGER.info("******Print all keys from redis"); Set<Object> redisKeys =
-		 * redisTemplate.keys("*"); // Store the keys in a List Iterator<Object> it =
-		 * redisKeys.iterator(); while (it.hasNext()) { Object data = it.next();
-		 * LOGGER.info("Keys in redis: " + data); }
-		 */
+		LOGGER.info("**Redis:: sessionID*****" + sessionIdFromRedis);
+
+		LOGGER.info("******Print all keys from redis");
+		Set<Object> redisKeys = redisTemplate.keys("*");
+		// Store the keys in a List
+		Iterator<Object> it = redisKeys.iterator();
+		while (it.hasNext()) {
+			Object data = it.next();
+			// LOGGER.info("Keys in redis: " + data);
+		}
 		return this.parepareCurrentUser(response.getUserSearchResponseContent().get(0));
 	}
 
@@ -156,7 +207,7 @@ public class ApplicationSecurityRepository implements SecurityContextRepository 
 		user.setActive(userinfo.getActive());
 		user.setAccountLocked(userinfo.getAccountLocked());
 		user.setGender(Gender.valueOf(userinfo.getGender().toUpperCase()));
-		user.setPassword(" ");
+		user.setPassword("");
 		user.setName(userinfo.getName());
 		user.setPwdExpiryDate(userinfo.getPwdExpiryDate());
 		user.setLocale(userinfo.getLocale());
