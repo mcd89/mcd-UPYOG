@@ -32,7 +32,7 @@ const Inbox = () => {
   return (
     <div style={styles.container}>
       <div style={styles.sidebar}>
-        <h2>Inbox</h2>
+        <h2>Inbox 2</h2>
         {emails.map((email) => (
           <div
             key={email.id}

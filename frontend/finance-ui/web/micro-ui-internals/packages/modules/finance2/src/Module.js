@@ -32,8 +32,6 @@ export const FinanceModule = ({ stateCode, userType, tenants }) => {
 const componentsToRegister = {
   Finance2Card,
   Finance2Module: FinanceModule, 
-  Inbox,
-  JournalVoucher
 };
 
 export const initFinanceComponents = () => {
