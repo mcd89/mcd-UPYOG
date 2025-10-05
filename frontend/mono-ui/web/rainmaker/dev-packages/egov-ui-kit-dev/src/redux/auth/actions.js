@@ -143,11 +143,12 @@ export const logout = () => {
           const tenantIdFull = getTenantId(); 
           const tenantParts = tenantIdFull.split('.');
           const cityCode = tenantParts.length > 1 ? tenantParts[1] : undefined;  // tenantParts[0] is "pg" in this case
-          const baseProxy = process.env.REACT_APP_BASE_PROXY || "https://mcdupyog.sparrowsoftech.in"; 
+          const baseProxy = process.env.REACT_APP_BASE_PROXY; 
           const parsedURL = new URL(baseProxy);
           const domain = parsedURL.hostname; // e.g., mcdupyog.sparrowsoftech.in
           const protocol = parsedURL.protocol; 
           const clearTokenURL = `${protocol}//${cityCode}-${domain}/services/EGF/rest/logout`;  // Construct the final logout URL
+          alert(clearTokenURL); // For debugging purposes
           const payload = {
             RequestInfo: {
               apiId: null,
