@@ -72,8 +72,17 @@ class App extends Component {
     }
 
     const isPrivacyPolicy = location && location.pathname && location.pathname.includes("privacy-policy");
+    const isLocalhost = Boolean(
+      window.location.hostname === "localhost" ||
+      window.location.hostname === "[::1]" ||
+      window.location.hostname.match(/^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/)
+    );
     if (nextProps.hasLocalisation !== this.props.hasLocalisation && !authenticated && !isPrivacyPolicy) {
-      nextProps.hasLocalisation && this.props.history.replace("/language-selection");
+      if (isLocalhost) {
+        nextProps.hasLocalisation && this.props.history.replace("/language-selection");
+      } else {
+        this.props.history.replace("/user/login");
+      }
     }
   }
 
