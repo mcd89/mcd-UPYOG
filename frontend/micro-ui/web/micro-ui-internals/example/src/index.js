@@ -10,13 +10,13 @@ import { initFSMComponents } from "@upyog/digit-ui-module-fsm";
 import { initPGRComponents } from "@nudmcdgnpm/digit-ui-module-pgr";
 import { initFinanceComponents } from "@mcd89/digit-ui-module-finance";
 import { initDSSComponents } from "@upyog/digit-ui-module-dss";
-import { initHRMSComponents } from "@mcd89/digit-ui-module-hrms";
+import { initHRMSComponents } from "@djb25/digit-ui-module-hrms";
 import { initReceiptsComponents, ReceiptsModule } from "@upyog/digit-ui-module-receipts";
 // import { initReportsComponents } from "@upyog/digit-ui-module-reports";
 import { initMCollectComponents } from "@upyog/digit-ui-module-mcollect";
 // import { initTLComponents } from "@upyog/digit-ui-module-tl";
 import { PaymentModule, PaymentLinks, paymentConfigs } from "@upyog/digit-ui-module-common";
-import { HRMSModule } from "@mcd89/digit-ui-module-hrms";
+import { HRMSModule } from "@djb25/digit-ui-module-hrms";
 import { FinanceModule } from "@mcd89/digit-ui-module-finance";
 // import { initOBPSComponents } from "@upyog/digit-ui-module-obps";
 import { initEngagementComponents } from "@upyog/digit-ui-module-engagement";
@@ -30,7 +30,7 @@ import { initBillsComponents, BillsModule } from "@upyog/digit-ui-module-bills";
 
 // import { PGRModule, PGRLinks } from "@nudmcdgnpm/digit-ui-module-pgr";
 // import { Body, TopBar } from "@nudmcdgnpm/digit-ui-react-components";
-import "@mcd89/upyog-css";
+import "@djb25/digit-ui-css";
 
 // import { PTRModule, PTRLinks, PTRComponents } from "@nudmcdgnpm/upyog-ui-module-ptr";
 import { ASSETComponents, ASSETLinks, ASSETModule } from "@nudmcdgnpm/upyog-ui-module-asset";

@@ -18,22 +18,19 @@
   }
 }
 */
-.employee-select-wrap:active{
-  background-color: white
-}
 .employee-select-wrap {
-  @apply mb-lg relative;
+  @apply mb-lg relative rounded-md;
 
   .select {
-    @apply relative block w-full h-10 border border-solid border-input-border;
+    @apply relative block w-full h-10 border border-solid border-input-border rounded-md;
     &:hover {
-      @apply border-2 border-solid border-primary-main;
+      @apply border-2 border-solid border-primary-main rounded-md;
     }
     input[type="text"] {
       width: calc(100% - 32px);
       background-color: transparent;
 
-      @apply absolute z-10 w-full h-full outline-none text-text-primary text-form-field pl-sm;
+      @apply absolute z-10 w-full h-full outline-none text-text-primary text-form-field pl-sm rounded-md;
     }
 
     p {
@@ -51,16 +48,13 @@
   }
 
   .select-active {
-    @apply relative block w-full h-10 border-2 border-solid border-primary-main;
-    height: 2 rem !important;
-    border: 1px solid black;
-    background-color: white;
+    @apply relative block w-full h-10 border-2 border-solid border-primary-main rounded-md;
 
     input[type="text"] {
       width: calc(100% - 32px);
       background-color: transparent;
 
-      @apply absolute z-10 w-full h-full outline-none text-text-primary text-form-field pl-sm;
+      @apply absolute z-10 w-full h-full outline-none text-text-primary text-form-field pl-sm rounded-md;
     }
 
     p {
@@ -83,9 +77,8 @@
   .options-card {
     width: 100% !important;
     box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.2);
-    max-height: 250px !important;
+    max-height: 400px;
     overflow: auto;
-    z-index: 1000 !important;
     @apply absolute z-20 mt-xs bg-white max-w-full;
 
     p {
@@ -97,23 +90,6 @@
       }
     }
   }
-}
-.fsm-registry-dropdown {
-  .select {
-    @apply flex;
-    input {
-      text-align: left;
-    }
-  }
-  .select-active {
-    text-align: left;
-  }
-  .options-card {
-    .profile-dropdown--item {
-      justify-content: left;
-    }
-  }
-  margin-bottom: 0;
 }
 
 .employee-select-wrap--elipses {
@@ -128,13 +104,13 @@
   max-width: 540px;
 
   .select {
-    @apply relative block w-full h-10 border border-solid border-input-border;
+    @apply relative block w-full h-10 border border-solid border-input-border rounded-md;
 
     input[type="text"] {
       width: calc(100% - 32px);
       background-color: transparent;
 
-      @apply absolute z-10 w-full h-full outline-none text-text-primary text-form-field pl-sm;
+      @apply absolute z-10 w-full h-full outline-none text-text-primary text-form-field pl-sm rounded-md;
     }
 
     p {
@@ -152,13 +128,13 @@
   }
 
   .select-active {
-    @apply relative block w-full h-10 border-2 border-solid border-primary-main;
+    @apply relative block w-full h-10 border-2 border-solid border-primary-main rounded-md;
 
     input[type="text"] {
       width: calc(100% - 32px);
       background-color: transparent;
 
-      @apply absolute z-10 w-full h-full outline-none text-text-primary text-form-field pl-sm;
+      @apply absolute z-10 w-full h-full outline-none text-text-primary text-form-field pl-sm rounded-md;
     }
 
     p {
@@ -194,6 +170,5 @@
   }
 }
 
-.employee-select-wrap .select img, .employee-select-wrap .select svg{
-  margin-top: 2px;
+@screen dt {
 }

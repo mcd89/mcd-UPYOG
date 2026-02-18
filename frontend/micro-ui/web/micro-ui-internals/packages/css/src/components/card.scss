@@ -53,11 +53,11 @@
 }
 
 .docsDescription {
-  color: #0b0c0c !important;
+  color: theme(colors.text.primary) !important;
 }
 
 .field-container {
-  @apply flex  items-center;
+  @apply flex items-center;
   /*@apply flex  justify-center items-center;*/
 }
 
@@ -78,7 +78,7 @@
     @apply text-text-primary text-heading-m font-bold;
   }
 
-  .card-section-sub-text{
+  .card-section-sub-text {
     @apply text-text-primary text-body-s;
   }
 
@@ -126,10 +126,7 @@
     padding-left: 25px;
   }
 }
-.employeeCard.fsm {
-  margin-bottom: 64px !important;
-  margin-left: 0px !important;
-  margin-right: 16px !important; }
+
 .header-wrap {
   @apply flex mb-md;
 
@@ -138,6 +135,7 @@
   }
 
   .header-content {
+    margin-top: 0.2rem;
   }
 
   .header-end {
@@ -154,8 +152,10 @@
 }
 
 .submit-bar {
-  @apply h-10 bg-primary-main text-center w-full outline-none;
-  box-shadow: inset 0px -2px 0px #0b0c0c;
+  @apply h-10 text-center w-full outline-none;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  box-shadow: inset 0px -2px 0px theme(colors.text.primary);
+  cursor: pointer;
 
   &:focus {
     @apply outline-none;
@@ -167,8 +167,8 @@
 }
 
 .submit-bar-disabled {
-  @apply h-10 bg-primary-main text-center w-full outline-none opacity-50;
-  background-color: #882636 !important;
+  @apply h-10 text-center w-full outline-none opacity-50;
+  background: linear-gradient(135deg, #667eea, #764ba2);
 
   &:focus {
     @apply outline-none;
@@ -176,16 +176,14 @@
 
   header {
     @apply font-rc font-medium text-legend text-white leading-10;
-    line-height: 2rem !important;
   }
 }
 
 @screen dt {
+
   .submit-bar,
   .submit-bar-disabled {
     width: 240px;
-    background-color: #882636 !important;
-    height: 2rem !important
   }
 
   .card {
@@ -215,7 +213,10 @@
   }
 
   .employeeCard {
-    @apply mb-md mx-md !important;
+    /*  TODO need to revisit that we need mx-md NABEEL/ANIL
+     @apply mb-md mx-md !important;
+    */
+    @apply mb-md !important;
 
     &.filter {
       margin-left: auto;
@@ -240,7 +241,7 @@
       @apply text-heading-m-dt;
     }
 
-    .card-section-sub-text{
+    .card-section-sub-text {
       @apply text-text-primary text-body-s-dt;
     }
 
@@ -265,8 +266,14 @@
       @apply text-left;
     }
 
+    /*
     .label-field-pair {
       @apply flex items-center;
+      gap: 1rem;
+
+      .card-label-smaller {
+        min-width: 250px;
+      }
 
       h2 {
         width: 30%;
@@ -275,10 +282,74 @@
       .field {
         width: 50%;
         margin-right: 20%;
+        flex: 1;
+
         .field {
           margin-right: unset;
         }
       }
+    }
+*/
+
+    /* CSS for vertical label-field layout */
+
+    .label-field-pair {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      /* Adjust spacing between label and field */
+      margin-bottom: 16px;
+      /* Space between form groups */
+    }
+
+    .label-field-pair .card-label-smaller {
+      margin-bottom: 0;
+      font-weight: 500;
+      color: #333;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    .label-field-pair .field {
+      width: 100%;
+    }
+
+    /* Ensure the text input takes full width of its container */
+    .label-field-pair .field .text-input {
+      width: 100%;
+    }
+
+    .label-field-pair .field .text-input input {
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    /* Optional: Add some styling to make it look cleaner */
+    .label-field-pair .field .text-input input:focus {
+      outline: none;
+      border-color: #007bff;
+      box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+    }
+
+    /* Responsive adjustments if needed */
+    @media (max-width: 768px) {
+      .label-field-pair {
+        gap: 6px;
+      }
+
+      .label-field-pair .card-label-smaller {
+        font-size: 13px;
+      }
+    }
+
+    /* Remove any default margins that might interfere */
+    .label-field-pair>* {
+      margin: 0;
+    }
+
+    /* Ensure proper spacing for the mandatory asterisk */
+    .label-field-pair .card-label-smaller::after {
+      margin-left: 2px;
     }
 
     .field-container {
@@ -303,8 +374,7 @@
       margin-right: auto;
     }
 
-    .header-content {
-    }
+    .header-content {}
 
     .header-end {
       margin-left: auto;
@@ -336,15 +406,17 @@
   .button-sub-text {
     width: 240px;
   }
+
   .home-page-info-banner-wrap {
     max-width: 45%;
-    min-width: 100%;
+    min-width: 40%;
     margin-left: 0;
     margin-right: 24px;
     margin-bottom: 24px;
   }
-  .info-banner-wrap-citizen-override {
-  }
+
+  .info-banner-wrap-citizen-override {}
+
   .oc-aknowledgement-screen {
     width: auto;
     min-width: 240px;
@@ -364,17 +436,16 @@
 .BPAemployeeCard {
   margin-left: 0px !important;
   margin-right: 0px !important;
-  margin-bottom: 0px !important;
+  margin-bottom: 64px !important;
 }
 
 .employee-application-details {
   display: flex !important;
-  flex-direction: column !important;
   justify-content: space-between !important;
-  max-height: 70px !important;
-  height: 70px !important;
-  margin-bottom: 15px !important;
+  max-height: 60px !important;
+  height: 60px !important;
 }
+
 .employee-main-application-details {
   padding: 10px !important;
 }
@@ -396,18 +467,187 @@
   width: 100% !important;
 }
 
-.language-selector .submit-bar, .submit-bar-disabled{
-  background-color: #5a1166 !important;
-}
 
-.owner-details{
+
+
+.new-employee-card {
+  background-color: #ffffff;
+  border: 1px solid #f3f4f6;
+  border-radius: 12px;
+  padding: 24px;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  gap: 24px;
   width: 100%;
-  flex-wrap: wrap;
-  justify-content: space-between
+  max-width: 420px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  font-family: 'Inter', -apple-system, sans-serif;
 }
 
-.owner-details-child{
-  width: 50%;
+.card-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.module-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #111827;
+  margin: 0;
+}
+
+.module-icon-wrap {
+  width: 36px;
+  height: 36px;
+  background-color: #2563eb;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ffffff;
+}
+
+.card-body-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.main-kpi-section {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.main-kpi-number {
+  font-size: 4.5rem;
+  font-weight: 700;
+  color: #1d4ed8;
+  line-height: 0.8;
+  letter-spacing: -2px;
+}
+
+.main-kpi-label-wrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.trend-icon {
+  width: 18px;
+  height: 18px;
+  border: 1.5px solid #10b981;
+  border-radius: 50%;
+  color: #10b981;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.main-kpi-label {
+  color: #1d4ed8;
+  font-weight: 500;
+  font-size: 1.1rem;
+}
+
+.secondary-kpi-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.secondary-kpi-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+}
+
+.sec-kpi-header .sec-kpi-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #9ca3af;
+  letter-spacing: 0.5px;
+}
+
+.sec-kpi-label {
+  font-size: 0.85rem;
+  color: #4b5563;
+  font-weight: 500;
+  text-align: right;
+}
+
+.sec-kpi-value {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #111827;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  min-width: 16px;
+}
+
+.sec-kpi-dot {
+  width: 8px;
+  height: 8px;
+  background-color: #ef4444;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.card-footer-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end; 
+  margin-top: auto; 
+  gap: 16px; 
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap; 
+  gap: 8px;
+  flex: 1; 
+}
+
+.pill-link {
+  background-color: #eff6ff;
+  color: #2563eb;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  
+}
+
+.pill-link:hover {
+  background-color: #dbeafe;
+}
+
+.details-btn {
+  background-color: #1e293b;
+  color: #ffffff;
+  padding: 8px 20px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  flex-shrink: 0;
+  margin-bottom: 2px; 
+}
+
+.details-btn:hover {
+  background-color: #0f172a;
 }

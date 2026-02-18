@@ -17,10 +17,10 @@
   "license": "MIT",
   "private": true,
   "engines": {
-    "node": ">=14"
+    "node": ">=18"
   },
   "scripts": {
-    "start": "run-s build start:dev",
+    "start": "DISABLE_ESLINT_PLUGIN=true NODE_OPTIONS=--openssl-legacy-provider react-scripts start:dev",
     "sprint": "SKIP_PREFLIGHT_CHECK=true run-s start:script",
     "start:dev": "run-p dev:**",
     "start:script": "./scripts/create.sh",
@@ -77,11 +77,12 @@
   },
   "dependencies": {
     "crypto-js": "^4.2.0",
+    "keycloak-js": "26.0.7",
     "lodash": "4.17.21",
     "microbundle-crl": "^0.13.11"
   },
   "resolutions": {
-    "**/babel-loader": "8.2.2",
+    "**/babel-loader": "9.1.2",
     "**/@babel/core": "7.14.0",
     "**/@babel/preset-env": "7.14.0",
     "**/@babel/plugin-transform-modules-commonjs": "7.14.0",

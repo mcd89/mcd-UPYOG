@@ -7,13 +7,7 @@
 }
 
 .employee-card-input {
-  @apply mb-lg pl-sm outline-none block border w-full h-10 border-input-border border-solid bg-white leading-10 text-form-field text-text-primary;
-  margin-bottom: 16px !important;
-  height: 40px !important; 
-}
-.employee-card-input:disabled {
-  @apply border-grey-dark text-grey-dark !important;
-  pointer-events: none !important;
+  @apply mb-lg pl-sm outline-none block border w-full h-10 border-input-border border-solid bg-white leading-10 text-form-field text-text-primary rounded-md;
 }
 .employee-card-input:disabled {
   @apply border-grey-dark text-grey-dark !important;
@@ -23,7 +17,7 @@
   width: fit-content !important;
   display: flex;
   align-items: center;
-  background: #eeeeee;
+  background: theme(colors.grey.mid);
   border-right: 0;
   padding-right: 5px;
 }
@@ -33,7 +27,7 @@
 
 .card-textarea,
 .employee-card-textarea {
-  @apply block outline-none mt-md mb-lg border w-full border-input-border border-solid bg-white h-24 text-form-field text-text-primary p-sm;
+  @apply block outline-none mt-md mb-lg border w-full border-input-border border-solid bg-white h-24 text-form-field text-text-primary p-sm rounded-md;
 }
 
 .inputWrapper {
@@ -90,19 +84,13 @@
 
 .citizen-card-input {
   @apply mb-lg pl-sm outline-none block border w-full h-10 border-input-border border-solid bg-white leading-10 text-form-field text-text-primary;
-
-}
-.citizen-card-input{
-  height:2rem !important;
-  margin-bottom: 16px !important;
-  line-height: 2.0rem !important;
 }
 
 .citizen-card-input--front {
   width: fit-content !important;
   display: flex;
   align-items: center;
-  background: #eeeeee;
+  background: theme(colors.grey.mid);
   border-right: 0;
   padding-right: 5px;
 }

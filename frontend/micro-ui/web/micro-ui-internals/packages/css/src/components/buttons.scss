@@ -22,7 +22,7 @@
   }
 }
 
-.input-mirror-selector-button{
+.input-mirror-selector-button {
   @apply h-16 bg-border text-center border-b-2 border-input-border border-solid outline-none px-lg !important;
 
   &:focus {
@@ -45,6 +45,62 @@
     @apply font-rc font-medium text-legend text-white;
   }
 }
+
 .submit-bar:focus {
   @apply outline-none !important;
+}
+
+.jk-digit-secondary-btn {
+  width: auto;
+  height: 40px;
+  background: theme(colors.white);
+  border: 1px solid theme(colors.primary.main);
+  padding: 20px;
+  color: theme(colors.primary.main);
+  display: flex;
+  align-items: center;
+  font-size: 19px;
+  cursor: pointer;
+  border-radius: 6px;
+
+  svg {
+    margin: 0 10px;
+  }
+}
+
+.jk-digit-primary-btn {
+  width: auto;
+  height: 40px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border: 1px solid linear-gradient(135deg, #667eea, #764ba2);
+  padding: 20px;
+  color: theme(colors.white);
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 19px;
+  border-radius: 6px;
+
+  svg {
+    margin: 0 15px;
+  }
+}
+
+.jk-digit-disabled-btn {
+  opacity: 0.5;
+  font-size: 19px;
+  cursor: not-allowed;
+}
+
+.jk-header-btn-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* for mobile view */
+@media (max-width: 780px) {
+  .jk-header-btn-wrapper {
+    flex-flow: column;
+    margin-bottom: 15px;
+  }
 }

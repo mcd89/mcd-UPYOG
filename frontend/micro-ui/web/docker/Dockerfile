@@ -7,7 +7,7 @@ RUN yarn add @upyog/digit-ui-module-fsm
 RUN yarn add @upyog/digit-ui-module-dss
 RUN yarn add @upyog/digit-ui-module-mcollect
 RUN yarn add @upyog/digit-ui-module-engagement
-RUN yarn add @mcd89/digit-ui-module-hrms
+RUN yarn add @djb25/digit-ui-module-hrms
 RUN yarn add @upyog/digit-ui-module-core
 RUN yarn add @upyog/digit-ui-module-common
 RUN yarn add @upyog/digit-ui-module-commonpt
