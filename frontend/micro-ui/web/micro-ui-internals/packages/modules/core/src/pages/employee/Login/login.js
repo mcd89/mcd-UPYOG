@@ -376,7 +376,7 @@ const Login = ({ config: propsConfig, t, isDisabled }) => {
                   <input
                     type="text"
                     placeholder="Enter Captcha"
-                    value={value || ""}
+                    value={captchaValue || ""}
                     autoComplete="off"
                     onChange={(e) => {
                       setCaptchaValue(e.target.value);
