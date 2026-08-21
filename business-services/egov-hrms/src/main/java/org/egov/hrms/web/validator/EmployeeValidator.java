@@ -26,6 +26,7 @@ import org.egov.tracer.model.CustomException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import org.springframework.web.client.RestTemplate;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -34,6 +35,16 @@ import static org.egov.hrms.utils.ErrorConstants.CITIZEN_TYPE_CODE;
 @Service
 @Slf4j
 public class EmployeeValidator {
+	
+	@Autowired
+	private RestTemplate restTemplate;
+
+	@org.springframework.beans.factory.annotation.Value("${egov.finance.host}")
+	private String financeHost;
+
+	@org.springframework.beans.factory.annotation.Value("${egov.finance.inbox.endpoint}")
+	private String financeInboxEndpoint;
+	
 	
 	@Autowired
 	private MDMSService mdmsService;
@@ -585,6 +596,10 @@ public class EmployeeValidator {
 				if(!existingEmployees.isEmpty()){
 				Employee existingEmp = existingEmployees.stream().filter(existingEmployee -> existingEmployee.getUuid().equals(employee.getUuid())).findFirst().get();
 				validateDataConsistency(employee, errorMap, mdmsData, existingEmp, request.getRequestInfo());
+				//for inbox item
+				
+				validatePendingBillsOnZoneChange(existingEmp, employee, errorMap, request.getRequestInfo());
+				
 				}
 				else
 					errorMap.put(ErrorConstants.HRMS_UPDATE_EMPLOYEE_NOT_EXIST_CODE, ErrorConstants.HRMS_UPDATE_EMPLOYEE_NOT_EXIST_MSG);
@@ -788,6 +803,62 @@ public class EmployeeValidator {
 
 		if(!CollectionUtils.isEmpty(errorMap.keySet())) {
 			throw new CustomException(errorMap);
+		}
+	}
+	
+	/**
+	 * Checks if the zone (boundary) is changing. If yes, calls the Finance service 
+	 * to ensure the employee's inbox is empty before allowing the transfer.
+	 */
+	private void validatePendingBillsOnZoneChange(Employee existingEmp, Employee updatedEmployee, Map<String, String> errorMap, RequestInfo requestInfo) {
+		String oldZone = getActiveZone(existingEmp);
+		String newZone = getActiveZone(updatedEmployee);
+		// If both zones exist and they are different, the user is being transferred
+		if (oldZone != null && newZone != null && !oldZone.equals(newZone)) {
+			boolean hasPendingBills = checkPendingBillsInFinance(updatedEmployee.getId(), requestInfo);
+			if (hasPendingBills) {
+				errorMap.put("HRMS_PENDING_BILLS_INBOX", "Cannot transfer employee to a new zone: User has pending bills in their inbox.");
+			}
+		}
+	}
+
+	/**
+	 * Extracts the boundary string from the current active jurisdiction.
+	 */
+	private String getActiveZone(Employee employee) {
+		if (CollectionUtils.isEmpty(employee.getJurisdictions())) return null;
+		
+		return employee.getJurisdictions().stream()
+				.filter(j -> j.getIsActive() != null && j.getIsActive())
+				.map(Jurisdiction::getZone)
+				.findFirst()
+				.orElse(null);
+	}
+
+	/**
+	 * Makes a synchronous REST call to the Finance/Workflow system to get the target employee's inbox items.
+	 */
+	private boolean checkPendingBillsInFinance(Long employeeId, org.egov.common.contract.request.RequestInfo requestInfo) {
+		try {
+			// Extract tenant and the real auth token from the incoming HRMS request
+//			String tenantId = requestInfo.getUserInfo().getTenantId();
+			String authToken = requestInfo.getAuthToken();
+			
+			// Format the URL to trigger "Option 3" in the Finance Security Repository
+			String url = financeHost + financeInboxEndpoint 
+						+ "?empId=" + employeeId 
+						+ "&tenantId=" + "dl.mcd" 
+						+ "&auth_token=" + authToken;
+			
+			log.info("Calling Finance API to check inbox: " + url);
+			
+			// Make a simple GET request. The Finance filter will intercept the parameters and authenticate.
+			List<?> inboxItems = restTemplate.getForObject(url, List.class);
+			return inboxItems != null && !inboxItems.isEmpty();
+			
+		} catch (Exception e) {
+			log.error("Failed to fetch inbox items for employee ID: " + employeeId, e);
+			throw new CustomException("FINANCE_SERVICE_ERROR", "Could not verify pending bills. Finance service unreachable or unauthorized.");
 		}
 	}
 
