@@ -27,8 +27,8 @@
     "@upyog/digit-ui-module-engagement": "1.8.0",
     "@upyog/digit-ui-module-dss": "1.8.11",
     "@upyog/digit-ui-module-fsm": "1.8.17",
-    "@mcd89/digit-ui-module-hrms": "1.2.25",
-    "@mcd89/digit-ui-module-finance": "1.0.8",
+    "@mcd89/digit-ui-module-hrms": "1.2.26",
+    "@mcd89/digit-ui-module-finance": "1.0.10",
     "@nudmcdgnpm/upyog-ui-module-asset": "1.2.9",
     "@upyog/digit-ui-module-mcollect": "1.8.8",
     "@upyog/digit-ui-module-commonpt": "1.8.1",
@@ -57,7 +57,7 @@
     "minimatch": "3.1.2",
     "**/@noble/hashes": "1.1.2",
     "**/@noble/ciphers": "0.2.0",
-    "node-releases": "2.0.6"
+    "**/node-releases": "2.0.6"
   },
   "scripts": {
     "start": "react-scripts start",
