@@ -242,70 +242,50 @@ function Jurisdiction({
     setjurisdictions((pre) => pre.map((item) => (item.key === jurisdiction.key ? { ...item, boundary: value } : item)));
   };
 
-  // added by umesh================
+  // added by umesh -> updated by shikhar================
 
-  const tenantId = jurisdiction?.boundary?.code;
+ const currentTenant = Digit.ULBService.getCurrentTenantId(); 
+  const rootTenantId = currentTenant.split(".")[0] + ".mcd";
 
   const { data: zoneMdmsData = [], isLoading: isZoneLoading } = Digit.Hooks.useCustomMDMS(
-    tenantId,
-
+    rootTenantId, 
     "egov-location",
-
-    [
-      {
-        name: "TenantBoundary",
-      },
-    ],
-
+    [{ name: "TenantBoundary" }],
     {
       select: (data) => {
-        const zones = data?.["egov-location"]?.TenantBoundary?.[0]?.boundary?.children || [];
+        const tb = data?.["egov-location"]?.TenantBoundary?.find(
+          (item) => item?.hierarchyType?.code === "ADMIN"
+        ) || data?.["egov-location"]?.TenantBoundary?.[0];
 
+        const zones = tb?.boundary?.children || [];
         return zones.map((zone) => ({
           code: zone.code,
-          i18text: zone.name || zone.code,
+          i18text: `TENANT_${zone.code}`,
+          name: zone.name || zone.code,
           value: zone.code,
         }));
       },
-
-      enabled: !!tenantId,
+      enabled: true,
     }
   );
 
   const sessionZoneObj = JSON.parse(sessionStorage.getItem("Digit.Employee.zone") || "{}");
   const userZone = sessionZoneObj?.value;
 
-  const zoneData = [];
+  const zoneData = zoneMdmsData;
 
   const isHQUser = ["HQ", "HO", "HEAD", "HEADQUARTER"].includes(userZone);
 
-  zoneMdmsData &&
-    zoneMdmsData.map((data) => {
-      zoneData.push({
-        i18text: `TENANT_${data.code}`,
-        code: data.code,
-        value: data.code,
-      });
-    });
-
-  useEffect(() => {
-    if (!isHQUser && userZone) {
-      setjurisdictions((prev) =>
-        prev.map((item) =>
-          item.key === jurisdiction.key
-            ? {
-                ...item,
-                zone: {
-                  code: userZone,
-                  value: userZone,
-                  i18text: `TENANT_${userZone}`,
-                },
-              }
-            : item
-        )
-      );
+   useEffect(() => {
+    if (zoneData?.length > 0 && jurisdiction?.zone?.code && !jurisdiction?.zone?.i18text) {
+      const matchedZone = zoneData.find((z) => z.code === jurisdiction.zone.code);
+      if (matchedZone) {
+        setjurisdictions((prev) =>
+          prev.map((item) => (item.key === jurisdiction.key ? { ...item, zone: matchedZone } : item))
+        );
+      }
     }
-  }, [isHQUser, userZone]);
+  }, [zoneData]);
 
   useEffect(() => {
     if (isHQUser && Boundary?.length > 0 && !jurisdiction?.boundary) {
@@ -414,7 +394,7 @@ function Jurisdiction({
             className="form-field"
             isMandatory={true}
             selected={jurisdiction?.zone}
-            disable={!isHQUser}
+            disable={zoneData.length === 0}
             option={zoneData}
             select={(value) => setjurisdictions((prev) => prev.map((item) => (item.key === jurisdiction.key ? { ...item, zone: value } : item)))}
             optionKey="i18text"
