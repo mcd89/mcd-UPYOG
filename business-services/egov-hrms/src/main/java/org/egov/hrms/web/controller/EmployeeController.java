@@ -98,7 +98,11 @@ public class EmployeeController {
 	@PostMapping(value = "/_update")
 	@ResponseBody
 	public ResponseEntity<?> update(@RequestBody @Valid EmployeeRequest employeeRequest) {
+		
+		log.info("The request info after reaching the controller "+ employeeRequest.getRequestInfo());
+		
 		validator.validateUpdateEmployee(employeeRequest);
+		
 		EmployeeResponse employeeResponse = employeeService.update(employeeRequest);
 		return new ResponseEntity<>(employeeResponse, HttpStatus.ACCEPTED);
 	}
