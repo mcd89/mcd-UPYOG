@@ -67,7 +67,8 @@ export const Request = async ({
   multipartFormData = false,
   multipartData = {},
   reqTimestamp = false,
-  plainAccessRequest = null
+  plainAccessRequest = null,
+  customAuthHeader = false
 }) => {
   if (method.toUpperCase() === "POST") {
     const ts = new Date().getTime();
@@ -110,6 +111,9 @@ export const Request = async ({
     "Content-Type": "application/json",
     Accept: window?.globalConfigs?.getConfig("ENABLE_SINGLEINSTANCE") ? "application/pdf,application/json" : "application/pdf",
   };
+  const authToken = authHeaders()["auth-token"]
+
+  if (customAuthHeader) headers = {authToken, ...headers};
 
   if (authHeader) headers = { ...headers, ...authHeaders() };
 
