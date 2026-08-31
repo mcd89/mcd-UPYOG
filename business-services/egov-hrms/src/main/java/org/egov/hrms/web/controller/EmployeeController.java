@@ -58,6 +58,8 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -104,13 +106,29 @@ public class EmployeeController {
 		
 		try {
 		    HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-		    String headerToken = request.getHeader("auth-token");
+		    Enumeration<String> headerNames = request.getHeaderNames();
+
+		    log.info("======🚀 INCOMING REQUEST HEADERS 🚀======");
 		    
-		    log.info("🚀 TOKEN FROM HEADER: " + headerToken);
+		    while (headerNames.hasMoreElements()) {
+		        String headerName = headerNames.nextElement();
+		        String headerValue = request.getHeader(headerName);
+		        
+		        // Print each header key and its value
+		        log.info(headerName + " : " + headerValue);
+		    }
+		    
+		    log.info("🚀======================================🚀");
+		    
+		    String headerToken = request.getHeader("auth-token");
+		    String headertoken2 = request.getHeader("authToken");
+		    String finalToken = headerToken != null ? headerToken : headertoken2;
+		    
+		    log.info("🚀 TOKEN FROM HEADER: " + finalToken);
 		    
 		    // If RequestInfo token is null, inject the header token
 		    if (employeeRequest.getRequestInfo().getAuthToken() == null) {
-		    	employeeRequest.getRequestInfo().setAuthToken(headerToken);
+		    	employeeRequest.getRequestInfo().setAuthToken(finalToken);
 		    }
 		} catch (Exception e) {
 			log.info("❌ Failed to fetch token from headers");
