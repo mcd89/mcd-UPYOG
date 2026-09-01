@@ -591,14 +591,13 @@ public class EmployeeValidator {
 				.tenantId(request.getEmployees().get(0).getTenantId())
 				.build(),request.getRequestInfo());
 		List <Employee> existingEmployees = existingEmployeeResponse.getEmployees();
-		log.info("This is the request info before the for loop " + request.getRequestInfo());
 		for(Employee employee: request.getEmployees()){
 			if(validateEmployeeForUpdate(employee, errorMap)){
 				if(!existingEmployees.isEmpty()){
 				Employee existingEmp = existingEmployees.stream().filter(existingEmployee -> existingEmployee.getUuid().equals(employee.getUuid())).findFirst().get();
 				validateDataConsistency(employee, errorMap, mdmsData, existingEmp, request.getRequestInfo());
+				
 				//for inbox item
-				log.info("This is the request info before calling the validate pending bills " + request.getRequestInfo());
 				validatePendingBillsOnZoneChange(existingEmp, employee, errorMap, request.getRequestInfo());
 				
 				}
@@ -815,7 +814,6 @@ public class EmployeeValidator {
 		String oldZone = getActiveZone(existingEmp);
 		String newZone = getActiveZone(updatedEmployee);
 		// If both zones exist and they are different, the user is being transferred
-		log.info("The request info inside validatePendingBillsOnZoneChange " + requestInfo);
 		if (oldZone != null && newZone != null && !oldZone.equals(newZone)) {
 			boolean hasPendingBills = checkPendingBillsInFinance(updatedEmployee.getId(), requestInfo);
 			if (hasPendingBills) {
@@ -841,13 +839,9 @@ public class EmployeeValidator {
 	 */
 	private boolean checkPendingBillsInFinance(Long employeeId, RequestInfo requestInfo) {
 		try {
+			
 			// Extract tenant and the real auth token from the incoming HRMS request
-//			String tenantId = requestInfo.getUserInfo().getTenantId();	
-			log.info("The request info before calling the finance api " + requestInfo);
 			String authToken = requestInfo.getAuthToken();
-			
-			
-			log.info("The auth token before calling the finance api " + authToken);
 			
 			// Format the URL to trigger "Option 3" in the Finance Security Repository
 			String url = financeHost + financeInboxEndpoint 
@@ -855,7 +849,7 @@ public class EmployeeValidator {
 						+ "&tenantId=" + "dl.mcd" 
 						+ "&auth_token=" + authToken;
 			
-			log.info("Calling Finance API to check inbox: " + url);
+			log.debug("Calling Finance API to check inbox: " + url);
 			
 			// Make a simple GET request. The Finance filter will intercept the parameters and authenticate.
 			List<?> inboxItems = restTemplate.getForObject(url, List.class);
