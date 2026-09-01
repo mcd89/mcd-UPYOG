@@ -31,7 +31,7 @@ const HrmsService = {
       auth: true,
       userService: true,
       params: { tenantId },
-      customAuthHeader = true
+      customAuthHeader: true
     }),
   count: (tenantId) =>
     Request({
