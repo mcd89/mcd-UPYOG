@@ -106,38 +106,19 @@ public class EmployeeController {
 		
 		try {
 		    HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-		    Enumeration<String> headerNames = request.getHeaderNames();
-
-		    log.info("======🚀 INCOMING REQUEST HEADERS 🚀======");
-		    
-		    while (headerNames.hasMoreElements()) {
-		        String headerName = headerNames.nextElement();
-		        String headerValue = request.getHeader(headerName);
-		        
-		        // Print each header key and its value
-		        log.info(headerName + " : " + headerValue);
-		    }
-		    
-		    log.info("🚀======================================🚀");
 		    
 		    String headerToken = request.getHeader("auth-token");
 		    String headertoken2 = request.getHeader("authToken");
 		    String finalToken = headerToken != null ? headerToken : headertoken2;
-		    
-		    log.info("🚀 TOKEN FROM HEADER: " + finalToken);
-		    
 		    // If RequestInfo token is null, inject the header token
 		    if (employeeRequest.getRequestInfo().getAuthToken() == null) {
 		    	employeeRequest.getRequestInfo().setAuthToken(finalToken);
 		    }
 		} catch (Exception e) {
-			log.info("❌ Failed to fetch token from headers");
+			log.debug("❌ Failed to fetch token from headers");
 		}
 		
-		log.info("The request info after reaching the controller "+ employeeRequest.getRequestInfo());
-		
 		validator.validateUpdateEmployee(employeeRequest);
-		
 		EmployeeResponse employeeResponse = employeeService.update(employeeRequest);
 		return new ResponseEntity<>(employeeResponse, HttpStatus.ACCEPTED);
 	}
