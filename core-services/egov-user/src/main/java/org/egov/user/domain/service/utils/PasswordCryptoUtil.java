@@ -64,8 +64,7 @@ public class PasswordCryptoUtil {
             // 1. Time Check (60 seconds)
             Instant requestTime = Instant.parse(timestamp);
             long diff = Duration.between(requestTime, Instant.now()).abs().getSeconds();
-            log.info("---THIS IS THE TIME DIFFERENCE-----");
-            log.info(diff);
+            log.info("----THIS IS THE DIFFERENCE---: {} seconds", diff);
             if (diff > 120) {
                 throw new CustomException("LOGIN_EXPIRED", "Session expired.");
             }
